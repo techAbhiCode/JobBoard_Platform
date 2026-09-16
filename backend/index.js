@@ -14,6 +14,7 @@ connectDB();
 
 const app = express();
 
+app.set('trust proxy', 1);
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -38,7 +39,10 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/ai', aiRoutes);
 
 app.use('/uploads', express.static('uploads'));
-
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'API is running' });
+});
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/api/health', (req, res) => {
     res.status(200).json({ success: true, message: 'Server is running' });
 });

@@ -1,6 +1,7 @@
 const rateLimit = require('express-rate-limit');
 const { RedisStore } = require('rate-limit-redis');
 const { getRedisClient } = require('../config/redis');
+const { validate } = require('../models/User');
 
 // Create Redis store with graceful fallback to MemoryStore
 const createRedisStore = (prefix = 'rl:') => {
@@ -24,6 +25,10 @@ const globalRateLimiter = rateLimit({
     max: 500,
     standardHeaders: true,
     legacyHeaders: false,
+    validate: {
+        xForwardedForHeader: false,
+        forwardedHeader: false
+    },
     store: createRedisStore('rl:global:'),
     message: {
         success: false,
@@ -37,6 +42,10 @@ const authRateLimiter = rateLimit({
     max: 20,
     standardHeaders: true,
     legacyHeaders: false,
+    validate: {
+        xForwardedForHeader: false,
+        forwardedHeader: false
+    },
     store: createRedisStore('rl:auth:'),
     message: {
         success: false,
