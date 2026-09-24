@@ -1,4 +1,4 @@
-# CodeAlpha JobBoard Platform
+#  JobBoard Platform
 
 A full-stack job board that connects candidates with employers and provides resume analysis and job matching powered by Google Gemini. The project is organized as a React/Vite frontend and an Express/MongoDB/Redis backend.
 
